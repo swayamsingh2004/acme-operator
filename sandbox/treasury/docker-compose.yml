@@ -1,0 +1,14 @@
+services:
+  treasury:
+    build: .
+    image: acme-treasury:latest
+    container_name: acme-treasury
+    ports:
+      - "127.0.0.1:6080:6080"   # noVNC live view
+      - "127.0.0.1:6090:6090"   # computer driver (operator harness only)
+    environment:
+      LEDGERLY_URL: http://host.docker.internal:4101
+      SANDBOX_TOKEN: acme-sandbox-admin
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    restart: unless-stopped

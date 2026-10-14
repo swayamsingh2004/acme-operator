@@ -1,0 +1,8 @@
+node_modules/
+.env
+sandbox/data/
+sandbox/drive/
+runs/
+console/dist/
+*.log
+.DS_Store

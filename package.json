@@ -1,0 +1,48 @@
+{
+  "name": "acme-operator",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Autonomous AI operator that turns company requests into completed, verified work - demonstrated on Accounts Payable at a sandbox company.",
+  "engines": {
+    "node": ">=22.5"
+  },
+  "scripts": {
+    "setup": "npm install && npx playwright install chromium && npm run treasury:build && npm run seed && npm run console:build",
+    "seed": "tsx sandbox/scripts/seed.ts",
+    "sandbox": "tsx sandbox/start.ts",
+    "treasury:build": "docker compose -f sandbox/treasury/docker-compose.yml build",
+    "treasury:up": "docker compose -f sandbox/treasury/docker-compose.yml up -d",
+    "treasury:down": "docker compose -f sandbox/treasury/docker-compose.yml down",
+    "console:build": "vite build console",
+    "console:dev": "vite console",
+    "start": "tsx operator/src/server/main.ts",
+    "op": "tsx operator/src/cli.ts",
+    "evals": "tsx operator/evals/run.ts",
+    "typecheck": "tsc --noEmit -p ."
+  },
+  "dependencies": {
+    "@google/genai": "^2.28.0",
+    "ajv": "^8.20.0",
+    "dotenv": "^18.0.7",
+    "exceljs": "^4.4.0",
+    "express": "^5.3.0",
+    "playwright": "^1.64.0",
+    "unpdf": "^1.8.1",
+    "ws": "^8.22.0",
+    "yaml": "^2.9.1"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^26.6.5",
+    "@types/react": "^19.3.0",
+    "@types/react-dom": "^19.3.0",
+    "@types/ws": "^8.18.2",
+    "@vitejs/plugin-react": "^6.1.2",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "tsx": "^4.23.15",
+    "typescript": "^7.0.2",
+    "vite": "^8.3.4"
+  }
+}

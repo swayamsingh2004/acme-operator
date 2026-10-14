@@ -1,0 +1,46 @@
+# Acme Robotics — systems registry.
+# The operator reads this to know which systems exist, what each one is the
+# source of truth for, and how it may access them. Credentials are referenced
+# by name only; the harness injects secrets so they never enter the model context.
+
+company:
+  name: Acme Robotics, Inc.
+  internal_domain: acme-robotics.example
+  operator_identity: ap.operator (AI operator, Accounts Payable team)
+  supervisor: Dana Whitfield (Controller)
+
+systems:
+  - id: ledgerly
+    name: Ledgerly ERP
+    kind: web
+    url: http://localhost:4101
+    login_url: http://localhost:4101/login
+    credential: ledgerly            # resolved by the harness vault
+    source_of_truth_for: [vendor master, purchase orders, invoices, invoice approvals, payment status]
+    how_to_access: browser tools (browser_login, browser_navigate, browser_click, ...)
+
+  - id: mail
+    name: Acme Mail (AP mailbox)
+    kind: web
+    url: http://localhost:4102
+    login_url: http://localhost:4102/login
+    credential: mail
+    source_of_truth_for: [incoming vendor emails and invoice PDFs, vendor correspondence]
+    how_to_access: browser tools
+
+  - id: treasury
+    name: Acme Treasury (legacy desktop application)
+    kind: desktop
+    display: 1280x800 virtual desktop
+    source_of_truth_for: [payee bank master, payment releases, payment register]
+    how_to_access: computer tools only (screenshot, left_click, type, key, ...). There is no API.
+
+  - id: drive
+    name: Shared Drive
+    kind: files
+    root: sandbox/drive
+    folders:
+      - AP/Scanned Invoices        # incoming scanned paper invoices
+      - AP/Scanned Invoices/Processed
+      - AP/Reports                 # reports output
+    how_to_access: file tools (list_files, read_file, write_file, move_file, write_spreadsheet)
